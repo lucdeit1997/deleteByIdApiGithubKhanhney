@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+      
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+    <script language="javascript" src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+</head>
+
+<body>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
+    <script src="./demo.js"></script>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="text-align:center">
+                    <h1>INFO USER FOLLOWER GITHUB KHANHNEY </h1>
+                </div>
+                <div class="table-responsive">
+                    <table id="mytable" class="table table-bordred table-striped table-bordered">
+                        <thead>
+                            <th>ID</th>
+                            <th>Avatar</th>
+                            <th>Tài Khoản</th>
+                            <th>Link Github</th>
+                            <th>type</th>
+                            <th>Delete</th>
+                        </thead>
+                        <tbody>
+                            <img src="" alt="" sizes="" srcset="" width="100px" height="100px">
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+   
+</body>
+<script>
+    toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+                }
+    $.ajax({
+        type: 'GET',
+        url: 'https://api.github.com/users/khanhney/followers',
+        dataType: "json",
+        success: function (data) {
+            data.forEach(element => {
+                $('tbody').append(` <tr id="deleUser${element.id}">
+                                <td>${element.id}</td>
+                                <td><img src="${element.avatar_url}" alt="" width="80px" height="80px"></td>
+                                <td class="username" _id="${element.login}">${element.login}</td>
+                                <td><a href="${element.html_url}">${element.html_url}</a></td>
+                                <td>${element.type}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-xs btnRemove"
+                                     _id="deleUser${element.id}">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>`)
+            });
+        },
+        error: function (err) {
+
+        }
+    });
+
+    $('body').on('click', '.btnRemove', function(){
+        const idXoa = $(this).attr('_id');
+        $(`#${idXoa}`).remove(); 
+        const username = $('.username').attr('_id')
+        toastr.success(`Xóa Thành Công @${username}`);
+    })
+</script>
+
+</html>
