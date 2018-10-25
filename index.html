@@ -87,7 +87,7 @@
                                 <td>${element.type}</td>
                                 <td>
                                     <button class="btn btn-danger btn-xs btnRemove"
-                                     _id="deleUser${element.id}">
+                                     _id="deleUser${element.id}" _username = "${element.login}">
                                     <span class="glyphicon glyphicon-trash"></span>
                                     </button>
                                 </td>
@@ -102,9 +102,8 @@
     $('body').on('click', '.btnRemove', function(){
         const idXoa = $(this).attr('_id');
         $(`#${idXoa}`).remove(); 
-        const username = $('.username').attr('_id')
+        const username = $(this).attr('_username')
         toastr.success(`Xóa Thành Công @${username}`);
     })
 </script>
-
-</html>
+    </html>
